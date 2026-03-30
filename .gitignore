@@ -1,0 +1,60 @@
+cat > .gitignore << 'EOF'
+## .NET Core
+bin/
+obj/
+*.user
+*.userosscache
+*.csproj.user
+*.swp
+*.suo
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+## Visual Studio
+.vs/
+.vscode/
+*.sln.ide
+*.sln.args
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## dotnet tools
+tools/
+*.dotnet
+
+## Logs
+logs/
+*.log
+*.lognunit.xml
+
+## Coverage files
+*.coverage
+*.coverage.xml
+*.dotCover
+*.trx
+
+## Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+## macOS
+.DS_Store
+__pycache__/
+*.pyc
+EOF
