@@ -20,4 +20,11 @@ public class HomeController : ControllerBase
     {
         return "Sliding Window: "+DateTime.Now.ToString("HH:mm:ss"); 
     }
+    
+    [EnableRateLimiting("TokenBucketPolicy")]
+    [HttpGet("get-data")]
+    public string GetData()
+    {
+        return "Token Bucket: " + DateTime.Now.ToString("HH:mm:ss");
+    }
 }

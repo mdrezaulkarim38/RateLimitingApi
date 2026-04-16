@@ -24,6 +24,16 @@ builder.Services.AddRateLimiter(options =>
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
         opt.QueueLimit = 2;
     });
+
+    options.AddTokenBucketLimiter("TokenBucketPolicy", opt =>
+    {
+        opt.TokenLimit = 10;
+        opt.ReplenishmentPeriod = TimeSpan.FromSeconds(5);
+        opt.TokensPerPeriod = 2;
+        opt.AutoReplenishment = true;
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 0;
+    });
     
     options.OnRejected = async (context, token) => 
     {
