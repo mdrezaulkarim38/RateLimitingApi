@@ -35,6 +35,13 @@ builder.Services.AddRateLimiter(options =>
         opt.QueueLimit = 0;
     });
     
+    options.AddConcurrencyLimiter("ConcurrencyPolicy", opt =>
+    {
+        opt.PermitLimit = 3;
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 2;
+    });
+    
     options.OnRejected = async (context, token) => 
     {
         Console.WriteLine(token);

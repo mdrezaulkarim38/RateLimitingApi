@@ -27,4 +27,12 @@ public class HomeController : ControllerBase
     {
         return "Token Bucket: " + DateTime.Now.ToString("HH:mm:ss");
     }
+    
+    [EnableRateLimiting("ConcurrencyPolicy")]
+    [HttpGet("heavy-report")]
+    public async Task<string> HeavyReport()
+    {
+        await Task.Delay(5000);
+        return "Report ready: " + DateTime.Now.ToString("HH:mm:ss");
+    }
 }
