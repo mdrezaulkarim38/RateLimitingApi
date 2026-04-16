@@ -13,4 +13,11 @@ public class HomeController : ControllerBase
     {
         return "hello to controller"+DateTime.Now.ToString("HH:mm:ss");
     }
+
+    [EnableRateLimiting("SlidingPolicy")]
+    [HttpGet("get-time")]
+    public string GetTime()
+    {
+        return "Sliding Window: "+DateTime.Now.ToString("HH:mm:ss"); 
+    }
 }

@@ -10,11 +10,27 @@ builder.Services.AddRateLimiter(options =>
 {
     options.AddFixedWindowLimiter("FixedPolicy", opt =>
     {
-        opt.Window = TimeSpan.FromMinutes(1);    // Time window of 1 minute
-        opt.PermitLimit = 10;                   // Allow 100 requests per minute
-        opt.QueueLimit = 2;                      // Queue limit of 2
+        opt.PermitLimit = 10; 
+        opt.Window = TimeSpan.FromSeconds(30); 
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 0; 
     });
+
+    options.AddSlidingWindowLimiter("SlidingPolicy", opt =>
+    {
+        opt.PermitLimit = 10;
+        opt.Window = TimeSpan.FromSeconds(30);
+        opt.SegmentsPerWindow = 3;
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 2;
+    });
+    
+    options.OnRejected = async (context, token) => 
+    {
+        Console.WriteLine(token);
+        context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+        await context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.");
+    };
 });
 
 var app = builder.Build();
